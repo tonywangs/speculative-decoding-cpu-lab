@@ -44,7 +44,13 @@ def main():
         checked([cli, "verify", output], work)
         checked([cli, "benchmark", output, "--output", work / "retimed"], work)
         checked([cli, "verify", work / "retimed"], work)
-        print("Isolated wheel installation, tests, run, verify and benchmark passed.")
+        suite = work / "suite"
+        checked([cli, "suite", "--output", suite, "--steps", "2", "--train-per-task", "4",
+                 "--eval-per-task", "1", "--warmups", "1", "--repeats", "5",
+                 "--draft-lengths", "1", "2", "--widths", "8", "16", "--max-new-tokens", "4"], work)
+        checked([cli, "verify-suite", suite], work)
+        checked([cli, "verify-suite", root / "results" / "cpu-multiseed"], work)
+        print("Isolated wheel installation, tests, run, verify, benchmark and suite replay passed.")
 
 
 if __name__ == "__main__":

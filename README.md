@@ -1,8 +1,8 @@
 # Speculative decoding CPU lab
 
-An installable experiment comparing cached greedy decoding with prompt lookup and a learned n-gram draft. It trains a 107k-parameter causal transformer locally, checks exact greedy output agreement, and measures when drafting helps or hurts. It uses small, explicitly synthetic token sequences, runs on CPU, and needs no model downloads, credentials, or paid services.
+An installable experiment comparing cached greedy decoding with prompt lookup and a learned n-gram draft. It trains small causal transformers locally, checks exact greedy output agreement, and measures when drafting helps or hurts. It uses small, explicitly synthetic token sequences, runs on CPU, and needs no model downloads, credentials, or paid services.
 
-The [recorded experiment](results/cpu-seed17/RESULTS.md) includes speedups, slowdowns, task accuracy, and the adjacent machine-readable artifacts. Reproduce it with the default command below; replay its saved weights with `.venv/bin/specdecode verify results/cpu-seed17`.
+The [six-target comparison](results/cpu-multiseed/RESULTS.md) includes variation across training seeds and model sizes, every slowdown, task accuracy, and adjacent machine-readable artifacts. The [original single-target experiment](results/cpu-seed17/RESULTS.md) is retained as historical evidence; reproduce that design with the default `run` command below. Use `suite` for the replication milestone.
 
 ## Run it
 
@@ -32,6 +32,26 @@ Inspect `RESULTS.md` and `report.json` in the output. Replay correctness without
 .venv/bin/specdecode verify .runs/example
 .venv/bin/specdecode benchmark .runs/example --output .runs/retimed
 ```
+
+## Replicate across seeds and sizes
+
+The [six-configuration comparison](results/cpu-multiseed/RESULTS.md) extends the original single-target experiment. Run the complete design with one command:
+
+```bash
+.venv/bin/specdecode suite --output .runs/replication --seeds 17 29 43 --widths 64 96 --data-seed 2026 --train-per-task 256 --eval-per-task 12 --steps 800 --batch-size 32 --learning-rate 0.003 --threads 1 --warmups 2 --repeats 9 --draft-lengths 1 2 4 8 --max-new-tokens 25
+```
+
+All options above are the suite defaults. Both widths use two transformer layers, four heads, feed-forward width 4×model width, context 64, vocabulary 22, FP32, and one inter-op thread. The six training budgets are bounded at 800 steps each. Training initialization and minibatch seeds vary; the entire training/evaluation dataset is fixed and byte-identical across configurations. Each held-out prompt is disjoint from training. Sizes are interleaved in execution order. Dataset and checkpoint hashes, hardware, dependencies, and training costs are saved individually.
+
+The suite uses a seeded random method permutation per case, cyclically rotated across nine measured repetitions. Every method occupies every timing position once per case; case order is shuffled. Repeats must be a multiple of the number of methods. This balances positions, not every possible predecessor/carryover effect. The legacy `run` command still defaults to five shuffled repetitions.
+
+The output holds six self-contained experiments plus `suite.json`, `suite-report.json`, a generated `RESULTS.md`, and a manifest linking all child manifests. The cross-configuration report includes every method's speedup for each seed/size and separate target accuracy; individual reports retain latency, acceptance, target calls, and drafting cost. No settings or slowdowns are filtered out. Repeated timing samples do not increase the number of independent trained targets. Fixed optimizer steps do not equalize training FLOPs or quality between sizes.
+
+```bash
+.venv/bin/specdecode verify-suite results/cpu-multiseed
+```
+
+This verifies the manifest chain, regenerates all inputs, replays all six checkpoints' cache audits and token agreement, checks complete paired samples and balanced timing positions, replays task accuracy, and recomputes individual and cross-configuration summaries. SHA-256 checks detect accidental corruption, not malicious replacement of artifacts and manifests together. Verification does not rerun timing measurements. Use a new output directory for replication; existing artifacts are never overwritten. A failed run leaves its completed child artifacts available for individual verification.
 
 ## What is compared
 
@@ -89,9 +109,9 @@ Summary speedup is the median of **paired** greedy/method latency ratios. The re
 .venv/bin/python scripts/verify_install.py
 ```
 
-The second command builds a wheel, installs it and its public CPU dependencies in a fresh virtual environment, runs the tests from outside the source tree, and exercises CLI training, benchmarking, hash verification, and re-timing. It requires internet for installation and `pip >= 22.3` in the invoking environment. Temporary installation files are removed when it finishes.
+The second command builds a wheel, installs it and its public CPU dependencies in a fresh virtual environment, runs the tests from outside the source tree, and exercises CLI training, benchmarking, hash verification, re-timing, a small six-target suite, and replay of the recorded full suite. It requires internet for installation and `pip >= 22.3` in the invoking environment. Temporary installation files are removed when it finishes.
 
-Tests cover rejection at each block position, complete acceptance/bonus generation, no-match fallback, accepted/rejected EOS, one-token and zero-token budgets, full/near-full contexts, corrupted-artifact rejection, dataset disjointness, paired sample accounting, and FP32/FP64 transformer cache rollback against an uncached reference. The small integration test trains a real model and produces/replays all artifacts. These are empirical checks, not a proof against every possible floating-point argmax divergence.
+Tests cover rejection at each block position, complete acceptance/bonus generation, no-match fallback, accepted/rejected EOS, one-token and zero-token budgets, full/near-full contexts, corrupted-artifact rejection, dataset disjointness, paired sample accounting, timing-position balance, six-target shared-data identity, cross-report tampering, and FP32/FP64 transformer cache rollback against an uncached reference. The small integration test trains a real model and produces/replays all artifacts. These are empirical checks, not a proof against every possible floating-point argmax divergence.
 
 ## Existing work and limits
 

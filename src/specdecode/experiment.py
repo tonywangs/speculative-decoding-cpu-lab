@@ -24,6 +24,9 @@ from .model import ModelConfig, TinyTransformer
 @dataclass(frozen=True)
 class RunConfig:
     seed: int = 17
+    data_seed: int | None = None
+    width: int = 64
+    balanced_order: bool = False
     train_per_task: int = 256
     eval_per_task: int = 12
     steps: int = 800
@@ -36,6 +39,9 @@ class RunConfig:
     max_new_tokens: int = 25
 
     def __post_init__(self):
+        ModelConfig(width=self.width)
+        if self.balanced_order and self.repeats % (1 + 2 * len(self.draft_lengths)):
+            raise ValueError("balanced order requires repeats divisible by the number of methods")
         for key in ("train_per_task", "eval_per_task", "steps", "batch_size", "threads", "repeats", "max_new_tokens"):
             if getattr(self, key) < 1:
                 raise ValueError(f"{key} must be positive")
@@ -172,12 +178,24 @@ def measure(model, data, cfg, variants, references):
             for name, drafter, k in variants:
                 got = decode(model, case["tokens"][:case["prompt_length"]], cfg.max_new_tokens, drafter, k)
                 assert_agreement(got.tokens, references[case["id"]], f"warmup/{case['id']}/{name}")
+    # A random base permutation per case, cyclically rotated across repetitions,
+    # puts every method at every position equally often in each complete cycle.
+    base_orders = {}
+    for case in cases:
+        order = list(variants)
+        rng.shuffle(order)
+        base_orders[case["id"]] = order
     raw = []
     for repeat in range(cfg.repeats):
         rng.shuffle(cases)
         for case in cases:
-            order = list(variants)
-            rng.shuffle(order)
+            if cfg.balanced_order:
+                base = base_orders[case["id"]]
+                offset = repeat % len(base)
+                order = base[offset:] + base[:offset]
+            else:
+                order = list(variants)
+                rng.shuffle(order)
             for position, (name, drafter, k) in enumerate(order):
                 prompt = case["tokens"][:case["prompt_length"]]
                 start = perf_counter_ns()
@@ -270,7 +288,9 @@ def finish_report(output, model, data, cfg, training, checkpoint_hash):
     report = {"schema_version": 1, "created_utc": datetime.now(timezone.utc).isoformat(),
               "config": asdict(cfg), "model_config": asdict(model.config), "environment": environment(),
               "training": training, "draft_fit_ns": draft_fit_ns, "checkpoint_sha256": checkpoint_hash,
-              "measurement_order_seed": cfg.seed + 3, "agreement_passed": True,
+              "measurement_order_seed": cfg.seed + 3,
+              "measurement_order": "random permutation per case, cyclic rotation" if cfg.balanced_order else "shuffled",
+              "dataset_sha256": sha256(output / "dataset.json"), "agreement_passed": True,
               "evaluation_cases": len(checks), "timed_samples": len(raw),
               "summary": summary, "accuracy": accuracy}
     write_json(output / "correctness.json", checks)
@@ -286,10 +306,10 @@ def finish_report(output, model, data, cfg, training, checkpoint_hash):
 def run(output, cfg):
     output = prepare_output(output)
     configure(cfg.threads)
-    data = generate_data(cfg.seed, cfg.train_per_task, cfg.eval_per_task)
+    data = generate_data(cfg.seed if cfg.data_seed is None else cfg.data_seed, cfg.train_per_task, cfg.eval_per_task)
     write_json(output / "dataset.json", data)
     print(f"Training {cfg.steps} steps on {len(data['train'])} synthetic sequences...", flush=True)
-    model, training = train(data, cfg, ModelConfig())
+    model, training = train(data, cfg, ModelConfig(width=cfg.width))
     torch.save({"model_config": asdict(model.config), "state_dict": model.state_dict()}, output / "target.pt")
     write_json(output / "config.json", asdict(cfg))
     return finish_report(output, model, data, cfg, training, sha256(output / "target.pt"))
@@ -307,7 +327,7 @@ def load_experiment(path):
     cfg = RunConfig(**json.loads((path / "config.json").read_text()))
     configure(cfg.threads)
     data = json.loads((path / "dataset.json").read_text())
-    if data != generate_data(cfg.seed, cfg.train_per_task, cfg.eval_per_task):
+    if data != generate_data(cfg.seed if cfg.data_seed is None else cfg.data_seed, cfg.train_per_task, cfg.eval_per_task):
         raise ValueError("dataset does not match generator/config")
     saved = torch.load(path / "target.pt", map_location="cpu", weights_only=True)
     model = TinyTransformer(ModelConfig(**saved["model_config"]))
@@ -333,6 +353,51 @@ def verify(path):
         raise AssertionError("recorded summary does not match raw measurements")
     if len(raw) != len(data["eval"]) * cfg.repeats * (1 + 2 * len(cfg.draft_lengths)):
         raise AssertionError("incomplete paired measurements")
+    validate_measurements(raw, recorded, cfg)
+    if report["checkpoint_sha256"] != sha256(Path(path) / "target.pt"):
+        raise AssertionError("checkpoint identity mismatch")
+    if "dataset_sha256" in report and report["dataset_sha256"] != sha256(Path(path) / "dataset.json"):
+        raise AssertionError("dataset identity mismatch")
+    if report["model_config"] != asdict(model.config):
+        raise AssertionError("model configuration mismatch")
+    for old, new in zip(recorded, rows, strict=True):
+        for key in new:
+            if key == "teacher_forced_nll_sum":
+                if not math.isclose(old[key], new[key], rel_tol=1e-6, abs_tol=1e-6):
+                    raise AssertionError("replayed task loss changed")
+            elif old[key] != new[key]:
+                raise AssertionError(f"replayed correctness changed: {key}")
     source_matches = report["environment"]["source_sha256"] == environment()["source_sha256"]
     return {"artifact_hashes_verified": True, "agreement_passed": True,
             "summary_recomputed": True, "source_hashes_match": source_matches, "cases": len(references)}
+
+
+def validate_measurements(raw, checks, cfg):
+    """Check complete pairing and counters, even if a damaged manifest was rebuilt."""
+    expected_methods = {"greedy", *(f"{family}-k{k}" for family in ("prompt", "ngram") for k in cfg.draft_lengths)}
+    cases = {c["id"]: c for c in checks}
+    expected = {(case, repeat, method) for case in cases for repeat in range(cfg.repeats) for method in expected_methods}
+    seen = set()
+    positions = {}
+    balance = {}
+    for row in raw:
+        key = (row["id"], row["repeat"], row["method"])
+        if key not in expected or key in seen:
+            raise AssertionError("duplicate or unexpected measurement")
+        seen.add(key)
+        check = cases[row["id"]]
+        if row["task"] != check["task"] or row["generated_tokens"] != len(check["greedy_tokens"]):
+            raise AssertionError("measurement case mismatch")
+        for counter, value in check["methods"][row["method"]].items():
+            if counter != "tokens" and row[counter] != value:
+                raise AssertionError(f"measurement counter mismatch: {counter}")
+        if not 0 <= row["draft_ns"] <= row["elapsed_ns"] or row["elapsed_ns"] <= 0:
+            raise AssertionError("invalid timing")
+        positions.setdefault(key[:2], []).append(row["order_in_pair"])
+        balance_key = (row["id"], row["method"], row["order_in_pair"])
+        balance[balance_key] = balance.get(balance_key, 0) + 1
+    if seen != expected or any(sorted(p) != list(range(len(expected_methods))) for p in positions.values()):
+        raise AssertionError("incomplete paired measurements or invalid ordering")
+    if cfg.balanced_order and any(balance.get((case, method, pos), 0) != cfg.repeats // len(expected_methods)
+                                  for case in cases for method in expected_methods for pos in range(len(expected_methods))):
+        raise AssertionError("method positions are not balanced")

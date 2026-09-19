@@ -2,6 +2,8 @@ import argparse
 import json
 from pathlib import Path
 
+from .suite import SuiteConfig, run_suite, verify_suite
+
 from .experiment import RunConfig, finish_report, load_experiment, prepare_output, run, sha256, verify
 
 
@@ -14,6 +16,18 @@ def main(argv=None):
         run_parser.add_argument("--" + name.replace("_", "-"), type=int, default=getattr(RunConfig(), name))
     run_parser.add_argument("--learning-rate", type=float, default=RunConfig().learning_rate)
     run_parser.add_argument("--draft-lengths", type=int, nargs="+", default=list(RunConfig().draft_lengths))
+    run_parser.add_argument("--data-seed", type=int)
+    run_parser.add_argument("--width", type=int, default=64)
+    run_parser.add_argument("--balanced-order", action="store_true")
+    suite_parser = sub.add_parser("suite", help="train and compare three seeds and two sizes on identical data")
+    suite_parser.add_argument("--output", type=Path, required=True)
+    for name in ("data_seed", "train_per_task", "eval_per_task", "steps", "batch_size", "threads", "warmups", "repeats", "max_new_tokens"):
+        suite_parser.add_argument("--" + name.replace("_", "-"), type=int, default=getattr(SuiteConfig(), name))
+    suite_parser.add_argument("--learning-rate", type=float, default=SuiteConfig().learning_rate)
+    for name in ("seeds", "widths", "draft_lengths"):
+        suite_parser.add_argument("--" + name.replace("_", "-"), type=int, nargs="+", default=list(getattr(SuiteConfig(), name)))
+    suite_verify = sub.add_parser("verify-suite", help="verify every suite artifact and replay all six targets")
+    suite_verify.add_argument("experiment", type=Path)
     verify_parser = sub.add_parser("verify", help="verify hashes and replay correctness without training/timing")
     verify_parser.add_argument("experiment", type=Path)
     bench_parser = sub.add_parser("benchmark", help="repeat timings using an existing saved model and data")
@@ -22,7 +36,13 @@ def main(argv=None):
     args = vars(parser.parse_args(argv))
     command = args.pop("command")
     try:
-        if command == "run":
+        if command == "verify-suite":
+            print(json.dumps(verify_suite(args["experiment"]), indent=2))
+            return
+        if command == "suite":
+            output = args.pop("output")
+            report = run_suite(output, SuiteConfig(**args))
+        elif command == "run":
             output = args.pop("output")
             report = run(output, RunConfig(**args))
         elif command == "verify":

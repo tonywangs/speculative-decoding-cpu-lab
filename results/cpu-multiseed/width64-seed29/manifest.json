@@ -1,0 +1,9 @@
+{
+  "RESULTS.md": "044dad1848fa4bec6e78a365f03710e7a48dd5ffaf8affdaf3b956c8d6b046ae",
+  "config.json": "a2788332fa392be15dc43cf04418bf8c0e4273682a451e565cc7cb2dd5b28c8b",
+  "correctness.json": "e5e399cb60bfbb4b11bb3d4c0ceafc2b0c96e3a629bad50375d69a242a0f4f42",
+  "dataset.json": "60ae66c5aca1be1d92ac36dfba16297f2fa1e75f6b38fc6bfe9993418813aab5",
+  "report.json": "bc3ca84b1a2b31f3a683d1087b4b3732bfe1428c39f23af53a280b44d9b3a94d",
+  "target.pt": "7bec3f7eff1c3d52b6a46302bc85e326694a006e165d4db0876dc0d52723353d",
+  "timings.jsonl": "81119845f2a0a89a708c5f7d6f7c64248fd7202ade708438c41fd509c1691ad4"
+}
