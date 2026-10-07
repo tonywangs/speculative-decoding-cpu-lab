@@ -4,3 +4,5 @@ __pycache__/
 build/
 dist/
 .runs/
+*.log
+!results/tests.log

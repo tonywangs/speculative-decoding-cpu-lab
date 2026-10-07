@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 
 from .suite import SuiteConfig, run_suite, verify_suite
+from .replication import run_replication, verify_replication
 
 from .experiment import RunConfig, finish_report, load_experiment, prepare_output, run, sha256, verify
 
@@ -33,13 +34,24 @@ def main(argv=None):
     bench_parser = sub.add_parser("benchmark", help="repeat timings using an existing saved model and data")
     bench_parser.add_argument("experiment", type=Path)
     bench_parser.add_argument("--output", type=Path, required=True)
+    replication = sub.add_parser("replicate", help="run a frozen dataset/training-seed replication")
+    replication.add_argument("--protocol", type=Path, required=True)
+    replication.add_argument("--output", type=Path, required=True)
+    replication_verify = sub.add_parser("verify-replication", help="offline replay of every replication checkpoint")
+    replication_verify.add_argument("experiment", type=Path)
     args = vars(parser.parse_args(argv))
     command = args.pop("command")
     try:
-        if command == "verify-suite":
+        if command == "verify-replication":
+            print(json.dumps(verify_replication(args["experiment"]), indent=2))
+            return
+        if command == "replicate":
+            output = args.pop("output")
+            report = run_replication(output, args["protocol"])
+        elif command == "verify-suite":
             print(json.dumps(verify_suite(args["experiment"]), indent=2))
             return
-        if command == "suite":
+        elif command == "suite":
             output = args.pop("output")
             report = run_suite(output, SuiteConfig(**args))
         elif command == "run":

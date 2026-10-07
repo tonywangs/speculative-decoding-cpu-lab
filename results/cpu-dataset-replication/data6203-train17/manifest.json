@@ -1,0 +1,10 @@
+{
+  "config.json": "5dfc7bfc2a474422e66da3c1bcb9c88f12057abf0ec0f91c0c7857c6c1cf59a8",
+  "correctness-repetitive.jsonl.gz": "9fd771bf90f8d1d688a93e596ab865be6d91cc425b3e7c3fd9ee2e11534a5568",
+  "correctness-structured.jsonl.gz": "acec4909e86a5ce5db5f367c4fd35a0a7ab0d37e923aec0a5fe891ed06e966cb",
+  "correctness-unpredictable.jsonl.gz": "9f339629a87b0a61e01251b3a282bf5d9cc75e8dab883b35ee4a55a3859f39e3",
+  "report.json": "2400e9c913e0d1cc370d1cefe944aee643afa43926a992fb59b50a4b58b9464c",
+  "target.pt": "77f4596d4f85e6df42f71611a183e0a806eb2c247367162291da8c761f12ab7e",
+  "timings-k2.jsonl.gz": "04b96d80091c10dc5b3415c976404a4fda09317b5f506d02ef718b0c714d4671",
+  "timings-k8.jsonl.gz": "9f20dead6a05186f992649647f633628387ee0e4abb6d652ab6c91031199e15b"
+}

@@ -33,6 +33,55 @@ Inspect `RESULTS.md` and `report.json` in the output. Replay correctness without
 .venv/bin/specdecode benchmark .runs/example --output .runs/retimed
 ```
 
+## Replicate across independently generated datasets
+
+The [dataset replication](results/cpu-dataset-replication/RESULTS.md) uses one fixed
+width-64 target, three independently generated datasets, and three paired training
+seeds: nine trained targets. The [frozen protocol](results/PROTOCOL.md) records the
+development pilot, existing work, selection rules and analysis limits. Historical
+single-seed and six-target results remain available below.
+
+Across the nine targets, length-8 prompt lookup achieved 5.140–5.373× on repetition.
+All speculative settings had median slowdowns on unpredictable data (0.863–0.947×);
+one conditional interval included parity. See the [results overview](results/README.md)
+for target accuracy, dataset variation and uncertainty. These synthetic CPU findings
+do not establish natural-language or large-model performance.
+
+After installing the package, reproduce the complete final experiment with:
+
+```bash
+.venv/bin/specdecode replicate --protocol results/cpu-dataset-replication/protocol.json --output .runs/dataset-replication
+```
+
+The protocol freezes 800 training steps per target, dataset seeds 3101/6203/9307,
+training seeds 17/29/43, 128 held-out examples per task, the first 16 IDs per task
+for timing, draft lengths 2/8, two warmups and six paired repetitions. Each length
+uses its own greedy/prompt/n-gram block; cyclic method ordering balances positions
+exactly over six repetitions. The two greedy blocks are separate contemporaneous
+baselines. Every decoding method shares the target, inputs, cache and FP32 settings.
+Any token disagreement aborts the run. Existing output directories are never replaced.
+If a run fails, completed child artifacts remain, but no complete aggregate manifest
+is written; do not interpret an incomplete directory as a completed replication.
+
+The primary speedup is the median across cases of each case's median paired ratio.
+Conditional bootstrap intervals resample whole cases, keeping all six repetitions
+together. Results retain every dataset/training/task combination, target accuracy,
+slowdown, raw timing, acceptance, target-call count and draft overhead. Dataset-level
+ranges describe three independent datasets; timing repeats do not increase that count.
+
+```bash
+.venv/bin/specdecode verify-replication results/cpu-dataset-replication
+```
+
+Offline verification regenerates and checks all datasets and split disjointness,
+replays all nine checkpoints on all held-out cases, checks raw timing pairing and
+position balance, and recomputes the case bootstrap and aggregate reports. It does
+not rerun timings. Exact data live in shared compressed dataset shards; correctness
+is sharded by task and timings by draft length, as deterministic gzip JSONL. Source
+hashes must match the frozen protocol to start a fresh run; verification reports
+source differences without hiding them. The isolated installation check below also
+replays the pilot and all nine final targets from outside the source tree.
+
 ## Replicate across seeds and sizes
 
 The [six-configuration comparison](results/cpu-multiseed/RESULTS.md) extends the original single-target experiment. Run the complete design with one command:

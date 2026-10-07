@@ -1,0 +1,81 @@
+{
+  "analysis": {
+    "accuracy": "All held-out cases, teacher-forced token/payload accuracy, free-running token accuracy, exact continuation; decoding agreement separately gated against uncached greedy.",
+    "across_seeds": "For each dataset report all three training estimates and their geometric mean; report min/median/max of the three dataset geometric means. These are descriptive ranges, not population confidence intervals. No pooling of raw repeats across datasets.",
+    "correctness": "Any token disagreement in audit, warmup or measurement aborts the configuration; never omit a failed configuration or substitute another seed.",
+    "limits": "Three synthetic datasets and three paired training seeds, one tiny FP32 CPU model size, shared host. Conditional case bootstrap excludes training/dataset and host uncertainty. No natural-language, large-model, GPU or sampling generalization.",
+    "primary": "For each case, median of six paired greedy/method latency ratios; per-configuration estimate is median across timed cases. Values <1 are slowdowns; retain every sample.",
+    "timing": "Separate three-method block per draft length; independent contemporaneous greedy baseline. Random base order per case, cyclic rotation over six repetitions; each method occupies each position twice. Length order alternates by configuration index.",
+    "uncertainty": "Percentile 95% bootstrap interval resampling whole cases (all six pairs together), conditional on this fitted target and dataset. Fixed PRNG reset per task/method. No timing repetition is an independent dataset or training trial."
+  },
+  "config": {
+    "batch_size": 32,
+    "bootstrap_draws": 2000,
+    "bootstrap_seed": 701,
+    "data_seeds": [
+      11003
+    ],
+    "draft_lengths": [
+      2,
+      8
+    ],
+    "eval_per_task": 8,
+    "learning_rate": 0.003,
+    "max_new_tokens": 25,
+    "phase": "development",
+    "repeats": 6,
+    "steps": 800,
+    "threads": 1,
+    "timed_per_task": 4,
+    "train_per_task": 256,
+    "training_seeds": [
+      7
+    ],
+    "warmups": 2,
+    "width": 64
+  },
+  "configuration_order": [
+    "data11003-train7"
+  ],
+  "datasets": {
+    "11003": {
+      "canonical_sha256": "d35071d11b6de7c6ef380b45d2af086a19ae4a4a9f92c65b70398bb27016e4cb",
+      "eval_count": 24,
+      "timing_ids": [
+        "eval-repetitive-0000",
+        "eval-repetitive-0001",
+        "eval-repetitive-0002",
+        "eval-repetitive-0003",
+        "eval-structured-0000",
+        "eval-structured-0001",
+        "eval-structured-0002",
+        "eval-structured-0003",
+        "eval-unpredictable-0000",
+        "eval-unpredictable-0001",
+        "eval-unpredictable-0002",
+        "eval-unpredictable-0003"
+      ],
+      "train_count": 768
+    }
+  },
+  "frozen_utc": "2026-09-27T05:26:33.388836+00:00",
+  "model_config": {
+    "context": 64,
+    "heads": 4,
+    "layers": 2,
+    "vocab_size": 22,
+    "width": 64
+  },
+  "schema_version": 1,
+  "source_sha256": {
+    "__init__.py": "6046df6cd3074db73d974a8169e8488b2565e90ebade39a50edc3773965315a2",
+    "cli.py": "de4b7c6b468c1514e5ae14a8faa42b51b553365995ea00d82fa8a85a5b8c6dcc",
+    "data.py": "39ca1ba9fd0a5ad2eadadad147ad168269b8741e74d6eaa288cdf11f499a25fa",
+    "decode.py": "fa1537c8da6afa8ecd3bea82d67b7ff7d78b84823ffb4ffe135dd37d9ef512a7",
+    "draft.py": "f32cfc4d0b0ab61fa508b58b2d42ae8bb1e16c25159bcc60077706d7e344d4ed",
+    "experiment.py": "300852cb107827179c3c5d666473450ff81a37594e03e5ba728a464d2e265a11",
+    "model.py": "547a7ea4b3148d3c71a83407ec018ea4e9ce9b815fecb1601026f8a6742504e0",
+    "replication.py": "b17f7d8f339e6d8087daa0a561d6cc9620a999336b42e7d3eb65aecb36149c0c",
+    "suite.py": "ef5b868a66bebd60ea1007f17cfa35f89ef45f41da85bc8f21cf3bd07a3df9a8"
+  }
+}

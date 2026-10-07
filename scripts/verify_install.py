@@ -50,7 +50,10 @@ def main():
                  "--draft-lengths", "1", "2", "--widths", "8", "16", "--max-new-tokens", "4"], work)
         checked([cli, "verify-suite", suite], work)
         checked([cli, "verify-suite", root / "results" / "cpu-multiseed"], work)
-        print("Isolated wheel installation, tests, run, verify, benchmark and suite replay passed.")
+        checked([cli, "verify", root / "results" / "cpu-seed17"], work)
+        checked([cli, "verify-replication", root / "results" / "cpu-dataset-pilot" / "experiment"], work)
+        checked([cli, "verify-replication", root / "results" / "cpu-dataset-replication"], work)
+        print("Isolated wheel installation, tests, workflows, historical and dataset replication replay passed.")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,108 @@
+/var/lib/dailybuilder/projects/speculative-decoding-cpu-lab/.venv/lib/python3.12/site-packages/torch/_subclasses/functional_tensor.py:279: UserWarning: Failed to initialize NumPy: No module named 'numpy' (Triggered internally at /pytorch/torch/csrc/utils/tensor_numpy.cpp:81.)
+  cpu = _conversion_method_template(device=torch.device("cpu"))
+test_chunked_and_cropped_logits (test_decode.DecoderTests.test_chunked_and_cropped_logits) ... ok
+test_complete_acceptance_and_bonus (test_decode.DecoderTests.test_complete_acceptance_and_bonus) ... ok
+test_context_and_output_limits (test_decode.DecoderTests.test_context_and_output_limits) ... ok
+test_eos_accepted_rejected_and_bonus (test_decode.DecoderTests.test_eos_accepted_rejected_and_bonus) ... ok
+test_invalid_arguments (test_decode.DecoderTests.test_invalid_arguments) ... ok
+test_no_proposals_falls_back (test_decode.DecoderTests.test_no_proposals_falls_back) ... ok
+test_real_transformer_rollback_matches_uncached (test_decode.DecoderTests.test_real_transformer_rollback_matches_uncached) ... ok
+test_rejection_at_each_position_and_rollback (test_decode.DecoderTests.test_rejection_at_each_position_and_rollback) ... ok
+test_lookup_longest_context_and_empty (test_decode.DrafterTests.test_lookup_longest_context_and_empty) ... ok
+test_ngram_longest_context_backoff_tie_break (test_decode.DrafterTests.test_ngram_longest_context_backoff_tie_break) ... ok
+test_complete_workflow_and_artifact_tampering (test_experiment.ExperimentTests.test_complete_workflow_and_artifact_tampering) ... Training 3 steps on 24 synthetic sequences...
+Auditing cache rollback and greedy agreement...
+Running warmups and paired timings...
+ok
+test_config_validation (test_experiment.ExperimentTests.test_config_validation) ... ok
+test_disagreement_is_fatal (test_experiment.ExperimentTests.test_disagreement_is_fatal) ... ok
+test_disjoint_reproducible_data (test_experiment.ExperimentTests.test_disjoint_reproducible_data) ... ok
+test_case_bootstrap_does_not_count_repeats_as_cases (test_replication.ReplicationTests.test_case_bootstrap_does_not_count_repeats_as_cases) ... ok
+test_nine_targets_replay_and_semantic_tampering (test_replication.ReplicationTests.test_nine_targets_replay_and_semantic_tampering) ... Running data11003-train7 (1/9)
+data11003-train7: auditing 6 held-out cases
+data11003-train7: measuring k=1, 3 cases x 6 repeats
+data11003-train7: measuring k=2, 3 cases x 6 repeats
+Running data14009-train7 (2/9)
+data14009-train7: auditing 6 held-out cases
+data14009-train7: measuring k=2, 3 cases x 6 repeats
+data14009-train7: measuring k=1, 3 cases x 6 repeats
+Running data17011-train7 (3/9)
+data17011-train7: auditing 6 held-out cases
+data17011-train7: measuring k=1, 3 cases x 6 repeats
+data17011-train7: measuring k=2, 3 cases x 6 repeats
+Running data14009-train11 (4/9)
+data14009-train11: auditing 6 held-out cases
+data14009-train11: measuring k=2, 3 cases x 6 repeats
+data14009-train11: measuring k=1, 3 cases x 6 repeats
+Running data17011-train11 (5/9)
+data17011-train11: auditing 6 held-out cases
+data17011-train11: measuring k=1, 3 cases x 6 repeats
+data17011-train11: measuring k=2, 3 cases x 6 repeats
+Running data11003-train11 (6/9)
+data11003-train11: auditing 6 held-out cases
+data11003-train11: measuring k=2, 3 cases x 6 repeats
+data11003-train11: measuring k=1, 3 cases x 6 repeats
+Running data17011-train13 (7/9)
+data17011-train13: auditing 6 held-out cases
+data17011-train13: measuring k=1, 3 cases x 6 repeats
+data17011-train13: measuring k=2, 3 cases x 6 repeats
+Running data11003-train13 (8/9)
+data11003-train13: auditing 6 held-out cases
+data11003-train13: measuring k=2, 3 cases x 6 repeats
+data11003-train13: measuring k=1, 3 cases x 6 repeats
+Running data14009-train13 (9/9)
+data14009-train13: auditing 6 held-out cases
+data14009-train13: measuring k=1, 3 cases x 6 repeats
+data14009-train13: measuring k=2, 3 cases x 6 repeats
+Replaying data11003-train7
+Replaying data14009-train7
+Replaying data17011-train7
+Replaying data14009-train11
+Replaying data17011-train11
+Replaying data11003-train11
+Replaying data17011-train13
+Replaying data11003-train13
+Replaying data14009-train13
+Replaying data11003-train7
+Replaying data14009-train7
+Replaying data17011-train7
+Replaying data14009-train11
+Replaying data17011-train11
+Replaying data11003-train11
+Replaying data17011-train13
+Replaying data11003-train13
+Replaying data14009-train13
+ok
+test_protocol_constraints_and_splits (test_replication.ReplicationTests.test_protocol_constraints_and_splits) ... ok
+test_source_drift_and_protocol_edit_are_rejected_before_training (test_replication.ReplicationTests.test_source_drift_and_protocol_edit_are_rejected_before_training) ... ok
+test_invalid_designs (test_suite.SuiteTests.test_invalid_designs) ... ok
+test_six_targets_shared_data_balanced_order_and_tampering (test_suite.SuiteTests.test_six_targets_shared_data_balanced_order_and_tampering) ... Running width8-seed17...
+Training 2 steps on 12 synthetic sequences...
+Auditing cache rollback and greedy agreement...
+Running warmups and paired timings...
+Running width16-seed17...
+Training 2 steps on 12 synthetic sequences...
+Auditing cache rollback and greedy agreement...
+Running warmups and paired timings...
+Running width8-seed29...
+Training 2 steps on 12 synthetic sequences...
+Auditing cache rollback and greedy agreement...
+Running warmups and paired timings...
+Running width16-seed29...
+Training 2 steps on 12 synthetic sequences...
+Auditing cache rollback and greedy agreement...
+Running warmups and paired timings...
+Running width8-seed43...
+Training 2 steps on 12 synthetic sequences...
+Auditing cache rollback and greedy agreement...
+Running warmups and paired timings...
+Running width16-seed43...
+Training 2 steps on 12 synthetic sequences...
+Auditing cache rollback and greedy agreement...
+Running warmups and paired timings...
+ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 75.194s
+
+OK

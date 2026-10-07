@@ -1,6 +1,55 @@
 # Recorded experiments
 
-The [three-seed, two-size comparison](cpu-multiseed/RESULTS.md) is the replication milestone. It uses identical data across all six targets, nine balanced timing repetitions, and retains every setting including slowdowns. Each configuration has its own complete raw artifacts. See the [main README](../README.md#replicate-across-seeds-and-sizes) for the explicit reproduction command.
+## Replication across datasets and paired training seeds
+
+The [nine-target dataset replication](cpu-dataset-replication/RESULTS.md) tests one
+fixed width-64 model on dataset seeds 3101/6203/9307 and training seeds 17/29/43.
+The [protocol](PROTOCOL.md) was frozen after a separate development pilot. Each
+target was audited on 128 held-out examples per task and timed on a predefined
+16-example subset per task, with two warmups and six balanced paired repetitions
+at draft lengths 2 and 8. All **3,456 case/target audits** and **15,552 timed outputs**
+matched uncached greedy. There are 1,152 unique held-out inputs shared across the
+three training seeds, not 3,456 independent inputs or nine independent datasets.
+
+The main historical directions persisted in the observed medians:
+
+- Length-8 prompt lookup on repetition achieved **5.140–5.373×** across the nine
+  targets. Dataset geometric means across training seeds were **5.311×, 5.250×,
+  and 5.203×**, respectively. Repetition free-running accuracy was **97.31–98.97%**,
+  while exact-continuation accuracy was **70.31–88.28%**.
+- Length-8 n-grams on structured records achieved **2.236–2.692×**. Structured
+  free-running accuracy was only **42.41–44.94%** and exact continuation was zero;
+  those speedups do not recover unpredictable future keys.
+- Both n-gram settings slowed repetition in every observed target median:
+  **0.830–0.971×**. Six of these 18 conditional case-bootstrap intervals included
+  parity, so not every individual slowdown is clearly resolved by the timed cases.
+- All 36 speculative task/method/target medians on unpredictable data were below
+  parity: **0.863–0.947×**. One conditional interval (prompt lookup, length 2)
+  included parity. Payload teacher-forced accuracy was **5.60–7.00%**, near the
+  6.25% chance level; no exact continuation was correct.
+
+These are ranges of case-level speedup estimates, not pooled timing observations.
+The full report keeps every task/dataset/training-seed result, conditional 95%
+whole-case bootstrap intervals, accuracy, slowdowns and dataset-level descriptive
+ranges. The intervals condition on a fixed target and dataset; they do not quantify
+population uncertainty from only three datasets or shared-host timing effects.
+No large-model, natural-language or stochastic-decoding conclusion follows.
+
+All nine distinct checkpoints, three exact dataset shards, raw timings, correctness
+records, hashes, versions and hardware details are preserved. The sum of recorded
+configuration durations was **2,819.628 seconds (47.0 minutes)**, including training,
+audit, warmups, timing and analysis; training loops alone summed to **509.001
+seconds**. These per-configuration intervals exclude final report/manifest writes
+and top-level aggregation. The run completed within its two-hour cap. See the main README for the
+single reproduction command and the frozen protocol for exact analysis rules.
+
+```bash
+.venv/bin/specdecode verify-replication results/cpu-dataset-replication
+```
+
+## Earlier single-dataset comparison
+
+The [three-seed, two-size comparison](cpu-multiseed/RESULTS.md) is the earlier replication across initializations and sizes. It uses identical data across all six targets, nine balanced timing repetitions, and retains every setting including slowdowns. Each configuration has its own complete raw artifacts. See the [main README](../README.md#replicate-across-seeds-and-sizes) for the explicit reproduction command.
 
 ```bash
 .venv/bin/specdecode verify-suite results/cpu-multiseed

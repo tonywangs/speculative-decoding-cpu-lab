@@ -1,0 +1,693 @@
+{
+  "accuracy": [
+    {
+      "data_seed": 11003,
+      "tasks": [
+        {
+          "cases": 8,
+          "exact_continuation_accuracy": 1.0,
+          "free_running_token_accuracy": 1.0,
+          "task": "repetitive",
+          "teacher_forced_nll": 0.022509444560855626,
+          "teacher_forced_payload_accuracy": 1.0,
+          "teacher_forced_token_accuracy": 1.0
+        },
+        {
+          "cases": 8,
+          "exact_continuation_accuracy": 0.0,
+          "free_running_token_accuracy": 0.42,
+          "task": "structured",
+          "teacher_forced_nll": 0.8316766834259033,
+          "teacher_forced_payload_accuracy": 0.6875,
+          "teacher_forced_token_accuracy": 0.7
+        },
+        {
+          "cases": 8,
+          "exact_continuation_accuracy": 0.0,
+          "free_running_token_accuracy": 0.12,
+          "task": "unpredictable",
+          "teacher_forced_nll": 3.791945457458496,
+          "teacher_forced_payload_accuracy": 0.07291666666666667,
+          "teacher_forced_token_accuracy": 0.11
+        }
+      ],
+      "training_seed": 7
+    }
+  ],
+  "agreement_passed": true,
+  "cells": [
+    {
+      "case_bootstrap_95": [
+        1.0,
+        1.0
+      ],
+      "case_speedups": {
+        "eval-repetitive-0000": 1.0,
+        "eval-repetitive-0001": 1.0,
+        "eval-repetitive-0002": 1.0,
+        "eval-repetitive-0003": 1.0
+      },
+      "data_seed": 11003,
+      "draft_length": 2,
+      "method": "greedy",
+      "slowdown": false,
+      "speedup": 1.0,
+      "task": "repetitive",
+      "training_seed": 7
+    },
+    {
+      "case_bootstrap_95": [
+        0.8473350467656625,
+        1.2522247757204858
+      ],
+      "case_speedups": {
+        "eval-repetitive-0000": 0.8473350467656625,
+        "eval-repetitive-0001": 0.8613180363730093,
+        "eval-repetitive-0002": 0.9207564299745479,
+        "eval-repetitive-0003": 1.2522247757204858
+      },
+      "data_seed": 11003,
+      "draft_length": 2,
+      "method": "ngram-k2",
+      "slowdown": true,
+      "speedup": 0.8910372331737786,
+      "task": "repetitive",
+      "training_seed": 7
+    },
+    {
+      "case_bootstrap_95": [
+        2.1169530256909614,
+        2.4485609266372124
+      ],
+      "case_speedups": {
+        "eval-repetitive-0000": 2.1169530256909614,
+        "eval-repetitive-0001": 2.356400602424354,
+        "eval-repetitive-0002": 2.4485609266372124,
+        "eval-repetitive-0003": 2.1326829792355397
+      },
+      "data_seed": 11003,
+      "draft_length": 2,
+      "method": "prompt-k2",
+      "slowdown": false,
+      "speedup": 2.2445417908299468,
+      "task": "repetitive",
+      "training_seed": 7
+    },
+    {
+      "case_bootstrap_95": [
+        1.0,
+        1.0
+      ],
+      "case_speedups": {
+        "eval-structured-0000": 1.0,
+        "eval-structured-0001": 1.0,
+        "eval-structured-0002": 1.0,
+        "eval-structured-0003": 1.0
+      },
+      "data_seed": 11003,
+      "draft_length": 2,
+      "method": "greedy",
+      "slowdown": false,
+      "speedup": 1.0,
+      "task": "structured",
+      "training_seed": 7
+    },
+    {
+      "case_bootstrap_95": [
+        2.203376017223645,
+        2.3344625888735564
+      ],
+      "case_speedups": {
+        "eval-structured-0000": 2.2793463067559214,
+        "eval-structured-0001": 2.3344625888735564,
+        "eval-structured-0002": 2.207301921284726,
+        "eval-structured-0003": 2.203376017223645
+      },
+      "data_seed": 11003,
+      "draft_length": 2,
+      "method": "ngram-k2",
+      "slowdown": false,
+      "speedup": 2.2433241140203237,
+      "task": "structured",
+      "training_seed": 7
+    },
+    {
+      "case_bootstrap_95": [
+        1.4193049136936264,
+        1.6375197707862061
+      ],
+      "case_speedups": {
+        "eval-structured-0000": 1.4277352538257648,
+        "eval-structured-0001": 1.505988761120907,
+        "eval-structured-0002": 1.6375197707862061,
+        "eval-structured-0003": 1.4193049136936264
+      },
+      "data_seed": 11003,
+      "draft_length": 2,
+      "method": "prompt-k2",
+      "slowdown": false,
+      "speedup": 1.466862007473336,
+      "task": "structured",
+      "training_seed": 7
+    },
+    {
+      "case_bootstrap_95": [
+        1.0,
+        1.0
+      ],
+      "case_speedups": {
+        "eval-unpredictable-0000": 1.0,
+        "eval-unpredictable-0001": 1.0,
+        "eval-unpredictable-0002": 1.0,
+        "eval-unpredictable-0003": 1.0
+      },
+      "data_seed": 11003,
+      "draft_length": 2,
+      "method": "greedy",
+      "slowdown": false,
+      "speedup": 1.0,
+      "task": "unpredictable",
+      "training_seed": 7
+    },
+    {
+      "case_bootstrap_95": [
+        0.8901501131988632,
+        0.9783620193977047
+      ],
+      "case_speedups": {
+        "eval-unpredictable-0000": 0.8901501131988632,
+        "eval-unpredictable-0001": 0.905658287579244,
+        "eval-unpredictable-0002": 0.9783620193977047,
+        "eval-unpredictable-0003": 0.8903500335220678
+      },
+      "data_seed": 11003,
+      "draft_length": 2,
+      "method": "ngram-k2",
+      "slowdown": true,
+      "speedup": 0.8980041605506559,
+      "task": "unpredictable",
+      "training_seed": 7
+    },
+    {
+      "case_bootstrap_95": [
+        0.8606216860500511,
+        1.014662740755004
+      ],
+      "case_speedups": {
+        "eval-unpredictable-0000": 0.9433076646054411,
+        "eval-unpredictable-0001": 1.014662740755004,
+        "eval-unpredictable-0002": 0.8606216860500511,
+        "eval-unpredictable-0003": 0.9069490691207076
+      },
+      "data_seed": 11003,
+      "draft_length": 2,
+      "method": "prompt-k2",
+      "slowdown": true,
+      "speedup": 0.9251283668630743,
+      "task": "unpredictable",
+      "training_seed": 7
+    },
+    {
+      "case_bootstrap_95": [
+        1.0,
+        1.0
+      ],
+      "case_speedups": {
+        "eval-repetitive-0000": 1.0,
+        "eval-repetitive-0001": 1.0,
+        "eval-repetitive-0002": 1.0,
+        "eval-repetitive-0003": 1.0
+      },
+      "data_seed": 11003,
+      "draft_length": 8,
+      "method": "greedy",
+      "slowdown": false,
+      "speedup": 1.0,
+      "task": "repetitive",
+      "training_seed": 7
+    },
+    {
+      "case_bootstrap_95": [
+        0.8102639041876152,
+        1.0259393796895648
+      ],
+      "case_speedups": {
+        "eval-repetitive-0000": 0.8102639041876152,
+        "eval-repetitive-0001": 0.8226396439562471,
+        "eval-repetitive-0002": 0.8105271344340716,
+        "eval-repetitive-0003": 1.0259393796895648
+      },
+      "data_seed": 11003,
+      "draft_length": 8,
+      "method": "ngram-k8",
+      "slowdown": true,
+      "speedup": 0.8165833891951594,
+      "task": "repetitive",
+      "training_seed": 7
+    },
+    {
+      "case_bootstrap_95": [
+        4.967448381627127,
+        5.556020494015296
+      ],
+      "case_speedups": {
+        "eval-repetitive-0000": 4.983451687505337,
+        "eval-repetitive-0001": 5.556020494015296,
+        "eval-repetitive-0002": 5.007352200058634,
+        "eval-repetitive-0003": 4.967448381627127
+      },
+      "data_seed": 11003,
+      "draft_length": 8,
+      "method": "prompt-k8",
+      "slowdown": false,
+      "speedup": 4.995401943781985,
+      "task": "repetitive",
+      "training_seed": 7
+    },
+    {
+      "case_bootstrap_95": [
+        1.0,
+        1.0
+      ],
+      "case_speedups": {
+        "eval-structured-0000": 1.0,
+        "eval-structured-0001": 1.0,
+        "eval-structured-0002": 1.0,
+        "eval-structured-0003": 1.0
+      },
+      "data_seed": 11003,
+      "draft_length": 8,
+      "method": "greedy",
+      "slowdown": false,
+      "speedup": 1.0,
+      "task": "structured",
+      "training_seed": 7
+    },
+    {
+      "case_bootstrap_95": [
+        2.2238018982096417,
+        2.83350691041612
+      ],
+      "case_speedups": {
+        "eval-structured-0000": 2.2238018982096417,
+        "eval-structured-0001": 2.83350691041612,
+        "eval-structured-0002": 2.654859061031919,
+        "eval-structured-0003": 2.627730818298148
+      },
+      "data_seed": 11003,
+      "draft_length": 8,
+      "method": "ngram-k8",
+      "slowdown": false,
+      "speedup": 2.6412949396650336,
+      "task": "structured",
+      "training_seed": 7
+    },
+    {
+      "case_bootstrap_95": [
+        1.3969002894744835,
+        1.853701942766884
+      ],
+      "case_speedups": {
+        "eval-structured-0000": 1.4758083269390196,
+        "eval-structured-0001": 1.3969002894744835,
+        "eval-structured-0002": 1.853701942766884,
+        "eval-structured-0003": 1.638441021581021
+      },
+      "data_seed": 11003,
+      "draft_length": 8,
+      "method": "prompt-k8",
+      "slowdown": false,
+      "speedup": 1.5571246742600202,
+      "task": "structured",
+      "training_seed": 7
+    },
+    {
+      "case_bootstrap_95": [
+        1.0,
+        1.0
+      ],
+      "case_speedups": {
+        "eval-unpredictable-0000": 1.0,
+        "eval-unpredictable-0001": 1.0,
+        "eval-unpredictable-0002": 1.0,
+        "eval-unpredictable-0003": 1.0
+      },
+      "data_seed": 11003,
+      "draft_length": 8,
+      "method": "greedy",
+      "slowdown": false,
+      "speedup": 1.0,
+      "task": "unpredictable",
+      "training_seed": 7
+    },
+    {
+      "case_bootstrap_95": [
+        0.8197541796763828,
+        0.916724326965711
+      ],
+      "case_speedups": {
+        "eval-unpredictable-0000": 0.8197541796763828,
+        "eval-unpredictable-0001": 0.8990444321749786,
+        "eval-unpredictable-0002": 0.916724326965711,
+        "eval-unpredictable-0003": 0.8236267481418362
+      },
+      "data_seed": 11003,
+      "draft_length": 8,
+      "method": "ngram-k8",
+      "slowdown": true,
+      "speedup": 0.8613355901584074,
+      "task": "unpredictable",
+      "training_seed": 7
+    },
+    {
+      "case_bootstrap_95": [
+        0.8587434589738006,
+        0.9641334531562471
+      ],
+      "case_speedups": {
+        "eval-unpredictable-0000": 0.920325745448388,
+        "eval-unpredictable-0001": 0.9641334531562471,
+        "eval-unpredictable-0002": 0.8587434589738006,
+        "eval-unpredictable-0003": 0.9219376920500966
+      },
+      "data_seed": 11003,
+      "draft_length": 8,
+      "method": "prompt-k8",
+      "slowdown": true,
+      "speedup": 0.9211317187492423,
+      "task": "unpredictable",
+      "training_seed": 7
+    }
+  ],
+  "configurations": 1,
+  "evaluation_cases": 24,
+  "timed_samples": 432,
+  "variation": [
+    {
+      "dataset_max": 1.0,
+      "dataset_median": 1.0,
+      "dataset_min": 1.0,
+      "datasets": [
+        {
+          "data_seed": 11003,
+          "geometric_mean": 1.0,
+          "training_speedups": [
+            1.0
+          ]
+        }
+      ],
+      "draft_length": 2,
+      "method": "greedy",
+      "task": "repetitive"
+    },
+    {
+      "dataset_max": 2.2445417908299468,
+      "dataset_median": 2.2445417908299468,
+      "dataset_min": 2.2445417908299468,
+      "datasets": [
+        {
+          "data_seed": 11003,
+          "geometric_mean": 2.2445417908299468,
+          "training_speedups": [
+            2.2445417908299468
+          ]
+        }
+      ],
+      "draft_length": 2,
+      "method": "prompt-k2",
+      "task": "repetitive"
+    },
+    {
+      "dataset_max": 0.8910372331737786,
+      "dataset_median": 0.8910372331737786,
+      "dataset_min": 0.8910372331737786,
+      "datasets": [
+        {
+          "data_seed": 11003,
+          "geometric_mean": 0.8910372331737786,
+          "training_speedups": [
+            0.8910372331737786
+          ]
+        }
+      ],
+      "draft_length": 2,
+      "method": "ngram-k2",
+      "task": "repetitive"
+    },
+    {
+      "dataset_max": 1.0,
+      "dataset_median": 1.0,
+      "dataset_min": 1.0,
+      "datasets": [
+        {
+          "data_seed": 11003,
+          "geometric_mean": 1.0,
+          "training_speedups": [
+            1.0
+          ]
+        }
+      ],
+      "draft_length": 8,
+      "method": "greedy",
+      "task": "repetitive"
+    },
+    {
+      "dataset_max": 4.995401943781985,
+      "dataset_median": 4.995401943781985,
+      "dataset_min": 4.995401943781985,
+      "datasets": [
+        {
+          "data_seed": 11003,
+          "geometric_mean": 4.995401943781985,
+          "training_speedups": [
+            4.995401943781985
+          ]
+        }
+      ],
+      "draft_length": 8,
+      "method": "prompt-k8",
+      "task": "repetitive"
+    },
+    {
+      "dataset_max": 0.8165833891951594,
+      "dataset_median": 0.8165833891951594,
+      "dataset_min": 0.8165833891951594,
+      "datasets": [
+        {
+          "data_seed": 11003,
+          "geometric_mean": 0.8165833891951594,
+          "training_speedups": [
+            0.8165833891951594
+          ]
+        }
+      ],
+      "draft_length": 8,
+      "method": "ngram-k8",
+      "task": "repetitive"
+    },
+    {
+      "dataset_max": 1.0,
+      "dataset_median": 1.0,
+      "dataset_min": 1.0,
+      "datasets": [
+        {
+          "data_seed": 11003,
+          "geometric_mean": 1.0,
+          "training_speedups": [
+            1.0
+          ]
+        }
+      ],
+      "draft_length": 2,
+      "method": "greedy",
+      "task": "structured"
+    },
+    {
+      "dataset_max": 1.466862007473336,
+      "dataset_median": 1.466862007473336,
+      "dataset_min": 1.466862007473336,
+      "datasets": [
+        {
+          "data_seed": 11003,
+          "geometric_mean": 1.466862007473336,
+          "training_speedups": [
+            1.466862007473336
+          ]
+        }
+      ],
+      "draft_length": 2,
+      "method": "prompt-k2",
+      "task": "structured"
+    },
+    {
+      "dataset_max": 2.2433241140203237,
+      "dataset_median": 2.2433241140203237,
+      "dataset_min": 2.2433241140203237,
+      "datasets": [
+        {
+          "data_seed": 11003,
+          "geometric_mean": 2.2433241140203237,
+          "training_speedups": [
+            2.2433241140203237
+          ]
+        }
+      ],
+      "draft_length": 2,
+      "method": "ngram-k2",
+      "task": "structured"
+    },
+    {
+      "dataset_max": 1.0,
+      "dataset_median": 1.0,
+      "dataset_min": 1.0,
+      "datasets": [
+        {
+          "data_seed": 11003,
+          "geometric_mean": 1.0,
+          "training_speedups": [
+            1.0
+          ]
+        }
+      ],
+      "draft_length": 8,
+      "method": "greedy",
+      "task": "structured"
+    },
+    {
+      "dataset_max": 1.5571246742600202,
+      "dataset_median": 1.5571246742600202,
+      "dataset_min": 1.5571246742600202,
+      "datasets": [
+        {
+          "data_seed": 11003,
+          "geometric_mean": 1.5571246742600202,
+          "training_speedups": [
+            1.5571246742600202
+          ]
+        }
+      ],
+      "draft_length": 8,
+      "method": "prompt-k8",
+      "task": "structured"
+    },
+    {
+      "dataset_max": 2.6412949396650336,
+      "dataset_median": 2.6412949396650336,
+      "dataset_min": 2.6412949396650336,
+      "datasets": [
+        {
+          "data_seed": 11003,
+          "geometric_mean": 2.6412949396650336,
+          "training_speedups": [
+            2.6412949396650336
+          ]
+        }
+      ],
+      "draft_length": 8,
+      "method": "ngram-k8",
+      "task": "structured"
+    },
+    {
+      "dataset_max": 1.0,
+      "dataset_median": 1.0,
+      "dataset_min": 1.0,
+      "datasets": [
+        {
+          "data_seed": 11003,
+          "geometric_mean": 1.0,
+          "training_speedups": [
+            1.0
+          ]
+        }
+      ],
+      "draft_length": 2,
+      "method": "greedy",
+      "task": "unpredictable"
+    },
+    {
+      "dataset_max": 0.9251283668630743,
+      "dataset_median": 0.9251283668630743,
+      "dataset_min": 0.9251283668630743,
+      "datasets": [
+        {
+          "data_seed": 11003,
+          "geometric_mean": 0.9251283668630743,
+          "training_speedups": [
+            0.9251283668630743
+          ]
+        }
+      ],
+      "draft_length": 2,
+      "method": "prompt-k2",
+      "task": "unpredictable"
+    },
+    {
+      "dataset_max": 0.8980041605506559,
+      "dataset_median": 0.8980041605506559,
+      "dataset_min": 0.8980041605506559,
+      "datasets": [
+        {
+          "data_seed": 11003,
+          "geometric_mean": 0.8980041605506559,
+          "training_speedups": [
+            0.8980041605506559
+          ]
+        }
+      ],
+      "draft_length": 2,
+      "method": "ngram-k2",
+      "task": "unpredictable"
+    },
+    {
+      "dataset_max": 1.0,
+      "dataset_median": 1.0,
+      "dataset_min": 1.0,
+      "datasets": [
+        {
+          "data_seed": 11003,
+          "geometric_mean": 1.0,
+          "training_speedups": [
+            1.0
+          ]
+        }
+      ],
+      "draft_length": 8,
+      "method": "greedy",
+      "task": "unpredictable"
+    },
+    {
+      "dataset_max": 0.9211317187492423,
+      "dataset_median": 0.9211317187492423,
+      "dataset_min": 0.9211317187492423,
+      "datasets": [
+        {
+          "data_seed": 11003,
+          "geometric_mean": 0.9211317187492423,
+          "training_speedups": [
+            0.9211317187492423
+          ]
+        }
+      ],
+      "draft_length": 8,
+      "method": "prompt-k8",
+      "task": "unpredictable"
+    },
+    {
+      "dataset_max": 0.8613355901584074,
+      "dataset_median": 0.8613355901584074,
+      "dataset_min": 0.8613355901584074,
+      "datasets": [
+        {
+          "data_seed": 11003,
+          "geometric_mean": 0.8613355901584074,
+          "training_speedups": [
+            0.8613355901584074
+          ]
+        }
+      ],
+      "draft_length": 8,
+      "method": "ngram-k8",
+      "task": "unpredictable"
+    }
+  ]
+}

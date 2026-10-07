@@ -1,0 +1,17 @@
+{
+  "RESULTS.md": "baae74b3d8c6c14f47c0271007b6122edc4d12213b414f083786bc410a6c0fe6",
+  "data3101-train17/manifest.json": "1b4113220d704d7ae5ce1d9d66d54f4c7dc6427b0c951e5e7cca375f0d64aa02",
+  "data3101-train29/manifest.json": "7f23f6f23c6e57bfc96c39c97e08bbf601300e098d35b6e03de2f7cb123d1f54",
+  "data3101-train43/manifest.json": "41a0e547e8b8c4e4cbc1d9cde7e3cef0f372ab23d96c0b1a3826cc20e92e1fbf",
+  "data6203-train17/manifest.json": "085ccb3f26e901ab6ef9433b09c8729c55215df69e8a1aa8629ddaf7b03ad8e0",
+  "data6203-train29/manifest.json": "e2150cd07bf72494be3a47efe7b8b734b4768fea642f931d05282e98e446cd35",
+  "data6203-train43/manifest.json": "6b1a9ab58ce796bd9c6822f25969cfcb0d4c92d14f1106776b1a6bc66d35e41d",
+  "data9307-train17/manifest.json": "5ce83ceb7e1c7f221062fbf9e968dd8d71de99cad64c429253ee902cd3f010ed",
+  "data9307-train29/manifest.json": "5418b162bddfd8dfbe2d80e2ab3138dfd7d92a52b11e12d44ce96a4bcd0d44bc",
+  "data9307-train43/manifest.json": "7ae08b08def0c549b4588d9e8bd30de45d6dc081561cc886f6f2cd6b8fc3d53f",
+  "dataset-3101.jsonl.gz": "b8fe8a8541a675bf0e86fa5491898f022e04a1673f72d85995f66cdae62adf76",
+  "dataset-6203.jsonl.gz": "853e3858ac29e6bd47afa29f6a75250f15df5384a79fc0b00d638d38f7fd7f38",
+  "dataset-9307.jsonl.gz": "8367c24a43d7aedaf81bb87f95d3d7d2d572822380911781350e26b51221856c",
+  "protocol.json": "5a0c9a107aef93e2357d935c4fa5d8cc4b2c2f5526ca09d4d47a8851f94b8d4d",
+  "replication-report.json": "15e0368b8dc08ead0ea5e1fb3f0155c4de2b7d1c320eb5eee4d79027157f2d2b"
+}
