@@ -115,6 +115,20 @@ class DecoderTests(unittest.TestCase):
                         got = decode(model, prompt, 16, OracleDraft(corrupt), k, audit=True)
                         self.assertEqual(got.tokens, reference)
 
+    def test_audit_rejects_argmax_change_with_numerically_close_logits(self):
+        class NearTieModel(ScheduledModel):
+            def forward(self, ids, cache=None):
+                logits, kv = super().forward(ids, cache)
+                logits[..., 5] = 1.0
+                logits[..., 6] = 1.0 + (1e-6 if cache is not None else -1e-6)
+                return logits, kv
+
+        # This difference passes the approximate logit check, but changing the
+        # winner must still fail the independent exact check.
+        model = NearTieModel([5] * 16)
+        with self.assertRaisesRegex(AssertionError, "greedy predictions disagree"):
+            decode(model, [0, 5], 3, audit=True)
+
     def test_chunked_and_cropped_logits(self):
         torch.manual_seed(7)
         model = TinyTransformer(ModelConfig(width=24, heads=3)).eval()

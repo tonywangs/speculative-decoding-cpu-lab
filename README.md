@@ -1,8 +1,72 @@
 # Speculative decoding CPU lab
 
-An installable experiment comparing cached greedy decoding with prompt lookup and a learned n-gram draft. It trains small causal transformers locally, checks exact greedy output agreement, and measures when drafting helps or hurts. It uses small, explicitly synthetic token sequences, runs on CPU, and needs no model downloads, credentials, or paid services.
+An installable CPU experiment comparing exact greedy decoding with prompt lookup,
+a learned n-gram draft, and a small GRU draft. The new [real-text comparison](results/realtext-gru/RESULTS.md)
+uses held-out Shakespeare dialogue, Carroll prose and CPython source. All model
+training and inference run locally; the pinned public inputs are included.
 
-The [six-target comparison](results/cpu-multiseed/RESULTS.md) includes variation across training seeds and model sizes, every slowdown, task accuracy, and adjacent machine-readable artifacts. The [original single-target experiment](results/cpu-seed17/RESULTS.md) is retained as historical evidence; reproduce that design with the default `run` command below. Use `suite` for the replication milestone.
+## Real-text GRU experiment
+
+Install with the instructions below, then show a live comparison on a held-out
+excerpt using the recorded models:
+
+```bash
+.venv/bin/specdecode demo-realtext results/realtext-gru/seed17 --corpus results/realtext-gru/corpus --case-index 0
+```
+
+The demo prints the prompt, the tiny target's generated continuation, the actual
+source continuation, and agreement across all seven methods. Try case indices
+0–11 for dialogue, 12–23 for prose, and 24–35 for Python. Output quality is limited;
+matching the target exactly does not mean predicting the source correctly.
+
+Reproduce both paired model seeds (use new output directories):
+
+```bash
+.venv/bin/specdecode realtext --corpus results/realtext-gru/corpus --output .runs/realtext-seed17 --seed 17
+.venv/bin/specdecode realtext --corpus results/realtext-gru/corpus --output .runs/realtext-seed29 --seed 29
+```
+
+Each run trains a width-96 transformer and width-32 GRU for 1,200 steps on the same
+training split, then audits and times cached greedy, prompt lookup, n-gram and GRU
+drafts (lengths 2/4). The [protocol](results/realtext-gru/PROTOCOL.md) specifies
+source licenses/hashes, contiguous train/validation/test splits, seeds, models,
+timing order, statistics and limits. The two runs share inputs but have separately
+trained weights. Every timed output is checked against uncached greedy. No network
+is used after package installation.
+
+Replay saved source/split integrity, checkpoints, exact agreement, timing pairing
+and report calculations without retraining or claiming to reproduce old timings:
+
+```bash
+.venv/bin/specdecode verify-realtext results/realtext-gru/seed17 --corpus results/realtext-gru/corpus
+.venv/bin/specdecode verify-realtext results/realtext-gru/seed29 --corpus results/realtext-gru/corpus
+```
+
+Check the installed real-text workflow from outside the checkout:
+
+```bash
+.venv/bin/python scripts/verify_realtext_wheel.py
+.venv/bin/python scripts/summarize_realtext.py --check
+```
+
+The wheel check uses the installed Torch runtime, builds and installs this package
+in a temporary directory, then runs the GRU tests, replays both recorded experiments
+and shows live examples from all three genres. It needs public build dependencies;
+it does not reinstall Torch. The summary check verifies that the comparison page
+matches the saved reports. The full unit suite below also covers shared decoder
+behavior, including rejecting a changed winning token despite close logits.
+
+Raw measurements and correctness are deterministic gzip JSON/JSONL; decompress
+with Python's `gzip` module. Each run also retains both checkpoints, exact token
+windows with source offsets, config, training trace/cost, validation/test quality,
+hardware and source hashes, a readable report, and an integrity manifest. A failed
+run has no complete manifest and is not a completed experiment.
+
+The older [synthetic dataset replication](results/cpu-dataset-replication/RESULTS.md),
+[six-target comparison](results/cpu-multiseed/RESULTS.md), and
+[original experiment](results/cpu-seed17/RESULTS.md) remain historical evidence.
+Their timings are not baselines for the real-text experiment. The sections below
+document those original commands and synthetic designs.
 
 ## Run it
 
@@ -102,7 +166,7 @@ The output holds six self-contained experiments plus `suite.json`, `suite-report
 
 This verifies the manifest chain, regenerates all inputs, replays all six checkpoints' cache audits and token agreement, checks complete paired samples and balanced timing positions, replays task accuracy, and recomputes individual and cross-configuration summaries. SHA-256 checks detect accidental corruption, not malicious replacement of artifacts and manifests together. Verification does not rerun timing measurements. Use a new output directory for replication; existing artifacts are never overwritten. A failed run leaves its completed child artifacts available for individual verification.
 
-## What is compared
+## Historical synthetic methods
 
 All three methods use **the same target, FP32 numerical settings, attention implementation, and KV cache**. There is no uncached performance baseline hidden in the comparison. The uncached implementation is used only as a correctness oracle outside timing.
 
@@ -162,8 +226,8 @@ The second command builds a wheel, installs it and its public CPU dependencies i
 
 Tests cover rejection at each block position, complete acceptance/bonus generation, no-match fallback, accepted/rejected EOS, one-token and zero-token budgets, full/near-full contexts, corrupted-artifact rejection, dataset disjointness, paired sample accounting, timing-position balance, six-target shared-data identity, cross-report tampering, and FP32/FP64 transformer cache rollback against an uncached reference. The small integration test trains a real model and produces/replays all artifacts. These are empirical checks, not a proof against every possible floating-point argmax divergence.
 
-## Existing work and limits
+## Historical synthetic study: existing work and limits
 
 This is a reproduction-oriented educational experiment, not a novel decoding method. [Leviathan, Kalman and Matias (ICML 2023)](https://proceedings.mlr.press/v202/leviathan23a.html) introduced exact speculative sampling; this project implements only deterministic greedy verification, not their sampling acceptance rule. [Apoorv Saxena's prompt lookup implementation](https://github.com/apoorvumang/prompt-lookup-decoding) uses suffix matches to draft from existing token history. [llama.cpp's lookup example](https://github.com/ggml-org/llama.cpp/tree/master/examples/lookup) provides an existing production-oriented lookup implementation. This repository implements its own small model and verifiers to expose cache behavior and measurement costs.
 
-Conclusions are limited to the saved CPU, thread count, tiny target, seed, synthetic generators, and measured cases. A shared virtual CPU can have noisy timings. This model is not a language model trained on natural language; the experiment does not establish production serving performance, GPU speedups, sampling equivalence, or benefits on large models. Poor task accuracy, draft rejection, and measured slowdowns are results to report, not failures to hide.
+Conclusions are limited to the saved CPU, thread count, tiny target, seed, synthetic generators, and measured cases. A shared virtual CPU can have noisy timings. Those synthetic models were not trained on natural language; the experiment does not establish production serving performance, GPU speedups, sampling equivalence, or benefits on large models. Poor task accuracy, draft rejection, and measured slowdowns are results to report, not failures to hide.

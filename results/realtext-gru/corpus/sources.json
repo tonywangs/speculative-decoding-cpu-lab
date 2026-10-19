@@ -1,0 +1,22 @@
+{
+  "dialogue": {
+    "url": "https://raw.githubusercontent.com/karpathy/char-rnn/6f9487a6fe5b420b7ca9afb0d7c078e37c1d1b4e/data/tinyshakespeare/input.txt",
+    "bytes": 1115394,
+    "sha256": "86c4e6aa9db7c042ec79f339dcb96d42b0075e16b8fc2e86bf0ca57e2dc565ed"
+  },
+  "prose": {
+    "url": "https://www.gutenberg.org/cache/epub/11/pg11.txt",
+    "bytes": 174311,
+    "sha256": "01b38ea4c710a84bc18d0bd41271a5a1a92b94e97b2812f4dece97d4a694725e"
+  },
+  "python": {
+    "url": "https://raw.githubusercontent.com/python/cpython/v3.12.0/Lib/ast.py",
+    "bytes": 63951,
+    "sha256": "0bc493501788e16842d082da908f8348e1e5d6112bb2c04f5ece6f69738a24a9"
+  },
+  "python-license": {
+    "url": "https://raw.githubusercontent.com/python/cpython/v3.12.0/LICENSE",
+    "bytes": 13936,
+    "sha256": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf"
+  }
+}

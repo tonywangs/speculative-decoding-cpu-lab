@@ -1,0 +1,24 @@
+{
+  "balanced_order": true,
+  "batch_size": 32,
+  "data_seed": 20261019,
+  "draft_lengths": [
+    2,
+    4
+  ],
+  "draft_steps": 1200,
+  "draft_width": 32,
+  "eval_per_task": 12,
+  "learning_rate": 0.003,
+  "max_new_tokens": 64,
+  "prompt_bytes": 96,
+  "repeats": 7,
+  "seed": 29,
+  "sequence_bytes": 160,
+  "steps": 1200,
+  "threads": 1,
+  "train_per_task": 512,
+  "validation_per_task": 12,
+  "warmups": 2,
+  "width": 96
+}

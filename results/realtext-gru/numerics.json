@@ -1,0 +1,86 @@
+[
+  {
+    "case_method_audits": 252,
+    "draft_sha256": "5d5ef7eaef5bef9f0f5f3b717b5a9d0b01c9ca5675941b6802969976c1ad4c40",
+    "elements_exceeding_atol_1e_5": 0,
+    "elements_exceeding_atol_2e_5": 0,
+    "exact_argmax_and_output_agreement": true,
+    "forward_block_comparisons": 9846,
+    "logit_comparisons": 7994691,
+    "max_absolute_error": 2.193450927734375e-05,
+    "max_absolute_error_location": {
+      "actual": -5.7251176834106445,
+      "block": 19,
+      "block_row": 0,
+      "case": "eval-dialogue-1029614",
+      "method": "ngram-k2",
+      "reference": -5.725139617919922,
+      "token": 96
+    },
+    "max_required_atol_after_rtol": 8.233661901613232e-06,
+    "max_required_atol_after_rtol_location": {
+      "actual": -0.0015159398317337036,
+      "block": 12,
+      "block_row": 1,
+      "case": "eval-python-0060275",
+      "method": "prompt-k2",
+      "reference": -0.0015243259258568287,
+      "token": 161
+    },
+    "minimum_margin_location": {
+      "actual_winner": 15,
+      "block": 42,
+      "block_row": 3,
+      "case": "eval-dialogue-1107534",
+      "method": "prompt-k4",
+      "reference_winner": 15,
+      "row_max_absolute_error": 6.496906280517578e-06
+    },
+    "minimum_reference_winning_margin": 0.00015115737915039062,
+    "rtol": 0.0001,
+    "seed": 17,
+    "target_sha256": "4e8aae7e72b4003a0da140751e03c398382159550cd8f3d2a412fe3d92e8dcf7"
+  },
+  {
+    "case_method_audits": 252,
+    "draft_sha256": "fdb17ec0750378756f60f44281252799f21df32ab966a8b98d0cc75e5ef07e64",
+    "elements_exceeding_atol_1e_5": 1,
+    "elements_exceeding_atol_2e_5": 0,
+    "exact_argmax_and_output_agreement": true,
+    "forward_block_comparisons": 9926,
+    "logit_comparisons": 8054199,
+    "max_absolute_error": 1.9550323486328125e-05,
+    "max_absolute_error_location": {
+      "actual": 7.13446044921875,
+      "block": 36,
+      "block_row": 1,
+      "case": "eval-prose-0154823",
+      "method": "gru-k2",
+      "reference": 7.134440898895264,
+      "token": 102
+    },
+    "max_required_atol_after_rtol": 1.0668890354281757e-05,
+    "max_required_atol_after_rtol_location": {
+      "actual": -0.0008325576782226562,
+      "block": 26,
+      "block_row": 1,
+      "case": "eval-python-0059315",
+      "method": "prompt-k2",
+      "reference": -0.000821806606836617,
+      "token": 126
+    },
+    "minimum_margin_location": {
+      "actual_winner": 119,
+      "block": 12,
+      "block_row": 0,
+      "case": "eval-prose-0147783",
+      "method": "greedy",
+      "reference_winner": 119,
+      "row_max_absolute_error": 1.2069940567016602e-05
+    },
+    "minimum_reference_winning_margin": 3.814697265625e-05,
+    "rtol": 0.0001,
+    "seed": 29,
+    "target_sha256": "aaf3acee319a4c6abd2d01c057ab357737f23e27fb40ac38e93c6efd02e3ddb6"
+  }
+]

@@ -1,0 +1,2 @@
+# Preserve downloaded source bytes and review them as pinned data snapshots.
+results/realtext-gru/corpus/*.txt -text -diff

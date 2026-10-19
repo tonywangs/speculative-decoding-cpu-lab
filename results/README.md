@@ -1,5 +1,13 @@
 # Recorded experiments
 
+## Real-text GRU comparison
+
+The [real-text comparison](realtext-gru/RESULTS.md) adds a trained GRU draft to
+matched greedy, prompt lookup and n-gram baselines on held-out Shakespeare,
+Carroll and CPython inputs. Its [protocol](realtext-gru/PROTOCOL.md) documents
+source snapshots, training splits, paired seeds and numerical audits. The
+historical synthetic studies below remain separate evidence.
+
 ## Replication across datasets and paired training seeds
 
 The [nine-target dataset replication](cpu-dataset-replication/RESULTS.md) tests one

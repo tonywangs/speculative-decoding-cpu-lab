@@ -210,16 +210,16 @@ def measure(model, data, cfg, variants, references):
     return raw
 
 
-def summarize(raw, correctness_rows):
+def summarize(raw, correctness_rows, tasks=TASKS):
     summary = []
     baseline = {(r["id"], r["repeat"]): r["elapsed_ns"] for r in raw if r["method"] == "greedy"}
     def method_key(name):
         if name == "greedy":
             return (0, 0)
         family, length = name.split("-k")
-        return (1 if family == "prompt" else 2, int(length))
+        return ({"prompt": 1, "ngram": 2, "gru": 3}[family], int(length))
 
-    for task in TASKS:
+    for task in tasks:
         for method in sorted({r["method"] for r in raw}, key=method_key):
             rows = [r for r in raw if r["task"] == task and r["method"] == method]
             ratios = [baseline[r["id"], r["repeat"]] / r["elapsed_ns"] for r in rows]
@@ -235,7 +235,7 @@ def summarize(raw, correctness_rows):
                 "mean_generated_tokens": statistics.mean(r["generated_tokens"] for r in rows),
                 "median_draft_ms": statistics.median(r["draft_ns"] for r in rows) / 1e6})
     accuracy = []
-    for task in TASKS:
+    for task in tasks:
         rows = [r for r in correctness_rows if r["task"] == task]
         n = sum(r["continuation_tokens"] for r in rows)
         accuracy.append({"task": task, "cases": len(rows),
@@ -372,9 +372,10 @@ def verify(path):
             "summary_recomputed": True, "source_hashes_match": source_matches, "cases": len(references)}
 
 
-def validate_measurements(raw, checks, cfg):
+def validate_measurements(raw, checks, cfg, expected_methods=None):
     """Check complete pairing and counters, even if a damaged manifest was rebuilt."""
-    expected_methods = {"greedy", *(f"{family}-k{k}" for family in ("prompt", "ngram") for k in cfg.draft_lengths)}
+    if expected_methods is None:
+        expected_methods = {"greedy", *(f"{family}-k{k}" for family in ("prompt", "ngram") for k in cfg.draft_lengths)}
     cases = {c["id"]: c for c in checks}
     expected = {(case, repeat, method) for case in cases for repeat in range(cfg.repeats) for method in expected_methods}
     seen = set()

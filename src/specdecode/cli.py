@@ -4,12 +4,13 @@ from pathlib import Path
 
 from .suite import SuiteConfig, run_suite, verify_suite
 from .replication import run_replication, verify_replication
+from .realtext import TextConfig, demo_text, run_text, verify_text
 
 from .experiment import RunConfig, finish_report, load_experiment, prepare_output, run, sha256, verify
 
 
 def main(argv=None):
-    parser = argparse.ArgumentParser(description="Synthetic CPU speculative decoding experiment")
+    parser = argparse.ArgumentParser(description="CPU speculative decoding experiments on synthetic and real text")
     sub = parser.add_subparsers(dest="command", required=True)
     run_parser = sub.add_parser("run", help="generate, train, audit, benchmark and save artifacts")
     run_parser.add_argument("--output", type=Path, required=True)
@@ -39,13 +40,33 @@ def main(argv=None):
     replication.add_argument("--output", type=Path, required=True)
     replication_verify = sub.add_parser("verify-replication", help="offline replay of every replication checkpoint")
     replication_verify.add_argument("experiment", type=Path)
+    text_run = sub.add_parser("realtext", help="train and compare a GRU and lookup drafts on pinned public text")
+    text_run.add_argument("--corpus", type=Path, required=True)
+    text_run.add_argument("--output", type=Path, required=True)
+    for name in ("seed", "steps", "draft_steps", "train_per_task", "eval_per_task", "validation_per_task"):
+        text_run.add_argument("--" + name.replace("_", "-"), type=int, default=getattr(TextConfig(), name))
+    for command in ("verify-realtext", "demo-realtext"):
+        text_parser = sub.add_parser(command, help="replay saved real-text evidence" if command.startswith("verify") else "show live exact-output comparison on a held-out excerpt")
+        text_parser.add_argument("experiment", type=Path)
+        text_parser.add_argument("--corpus", type=Path, required=True)
+        if command.startswith("demo"):
+            text_parser.add_argument("--case-index", type=int, default=0)
     args = vars(parser.parse_args(argv))
     command = args.pop("command")
     try:
-        if command == "verify-replication":
+        if command in ("verify-realtext", "demo-realtext"):
+            function = verify_text if command == "verify-realtext" else demo_text
+            source = args.pop("experiment")
+            print(json.dumps(function(source, **args), indent=2))
+            return
+        if command == "realtext":
+            output = args.pop("output")
+            corpus = args.pop("corpus")
+            report = run_text(output, corpus, TextConfig(**args))
+        elif command == "verify-replication":
             print(json.dumps(verify_replication(args["experiment"]), indent=2))
             return
-        if command == "replicate":
+        elif command == "replicate":
             output = args.pop("output")
             report = run_replication(output, args["protocol"])
         elif command == "verify-suite":
