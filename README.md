@@ -5,6 +5,17 @@ a learned n-gram draft, and a small GRU draft. The new [real-text comparison](re
 uses held-out Shakespeare dialogue, Carroll prose and CPython source. All model
 training and inference run locally; the pinned public inputs are included.
 
+The [resumable research controller](docs/research-controller.md) now preserves the
+full study population, proposals, cumulative resource budgets and per-operation
+checkpoints. Its [six-unit cost calibration](results/controller-calibration/RESULTS.md)
+is a bounded prerequisite; the two successive autonomous full-population
+experiments remain unfinished. Inspect the saved controller without new inference:
+
+```bash
+.venv/bin/python -m specdecode.research status
+.venv/bin/python -m specdecode.research verify
+```
+
 ## Real-text GRU experiment
 
 Install with the instructions below, then show a live comparison on a held-out

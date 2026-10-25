@@ -6,3 +6,4 @@ dist/
 .runs/
 *.log
 !results/tests.log
+results/controller-calibration/.lock

@@ -33,12 +33,14 @@ def validate(model, prompt, max_new_tokens):
 
 
 @torch.inference_mode()
-def decode(model, prompt, max_new_tokens, drafter=None, draft_length=0, audit=False):
+def decode(model, prompt, max_new_tokens, drafter=None, draft_length=0, audit=False, policy=None):
     validate(model, prompt, max_new_tokens)
     if draft_length < 0 or (drafter is None and draft_length):
         raise ValueError("positive draft length requires a drafter")
     if drafter is not None and hasattr(drafter, "reset"):
         drafter.reset()
+    if policy is not None:
+        policy.reset()
     history = list(prompt)
     result = DecodeResult()
     budget = min(max_new_tokens, model.config.context - len(history))
@@ -58,11 +60,12 @@ def decode(model, prompt, max_new_tokens, drafter=None, draft_length=0, audit=Fa
         _, cache = forward(history[:-1], None)
     while len(result.tokens) < budget:
         remaining = budget - len(result.tokens)
-        if drafter is not None and draft_length and remaining > 1:
+        block_length = draft_length if policy is None else policy.length
+        if drafter is not None and block_length and remaining > 1:
             start = perf_counter_ns()
-            proposals = list(drafter.propose(history, min(draft_length, remaining - 1)))
+            proposals = list(drafter.propose(history, min(block_length, remaining - 1)))
             result.draft_ns += perf_counter_ns() - start
-            proposals = proposals[:min(draft_length, remaining - 1)]
+            proposals = proposals[:min(block_length, remaining - 1)]
             if any(t < 0 or t >= model.config.vocab_size for t in proposals):
                 raise ValueError("drafter returned an invalid token")
             if EOS in proposals:
@@ -95,6 +98,8 @@ def decode(model, prompt, max_new_tokens, drafter=None, draft_length=0, audit=Fa
                 break
         if proposals and not rejected and len(emitted) == len(proposals):
             result.fully_accepted_blocks += 1
+        if policy is not None and proposals:
+            policy.observe(len(proposals), len(emitted) - int(rejected), rejected)
         if not rejected and (not emitted or emitted[-1] != EOS):
             emitted.append(predictions[len(proposals)])
         if EOS in emitted:

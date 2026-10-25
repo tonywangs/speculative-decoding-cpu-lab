@@ -1,0 +1,369 @@
+{
+  "branch_requirements": {
+    "fallback": {
+      "analogue_calls": 32233742,
+      "analogue_seconds": 92756.91050707646,
+      "conservative_forward_call_upper_bound": 66992292,
+      "memory_bound": 4294967296,
+      "runtime_bound": null,
+      "status": "branch not executed; cost uses measured experiment-1 policy as an analogue, not a guaranteed forecast"
+    },
+    "strict": {
+      "analogue_calls": 32233742,
+      "analogue_seconds": 92756.91050707646,
+      "conservative_forward_call_upper_bound": 66992292,
+      "memory_bound": 4294967296,
+      "runtime_bound": null,
+      "status": "branch not executed; cost uses measured experiment-1 policy as an analogue, not a guaranteed forecast"
+    }
+  },
+  "calibration_paired_ratios": [
+    {
+      "median_latency_ms": 136.497151,
+      "median_paired_speedup": 1.0,
+      "method": "greedy",
+      "seed": 17,
+      "task": "dialogue"
+    },
+    {
+      "median_latency_ms": 115.890208,
+      "median_paired_speedup": 1.1375355808138727,
+      "method": "prompt-k2",
+      "seed": 17,
+      "task": "dialogue"
+    },
+    {
+      "median_latency_ms": 124.671782,
+      "median_paired_speedup": 1.101181492697361,
+      "method": "prompt-adaptive",
+      "seed": 17,
+      "task": "dialogue"
+    },
+    {
+      "median_latency_ms": 88.950023,
+      "median_paired_speedup": 1.52891689543145,
+      "method": "ngram-k2",
+      "seed": 17,
+      "task": "dialogue"
+    },
+    {
+      "median_latency_ms": 96.929573,
+      "median_paired_speedup": 1.3572785250108432,
+      "method": "ngram-adaptive",
+      "seed": 17,
+      "task": "dialogue"
+    },
+    {
+      "median_latency_ms": 136.686236,
+      "median_paired_speedup": 0.9895972393964788,
+      "method": "gru-k2",
+      "seed": 17,
+      "task": "dialogue"
+    },
+    {
+      "median_latency_ms": 135.14997,
+      "median_paired_speedup": 0.9934163704726116,
+      "method": "gru-adaptive",
+      "seed": 17,
+      "task": "dialogue"
+    },
+    {
+      "median_latency_ms": 135.809368,
+      "median_paired_speedup": 1.0,
+      "method": "greedy",
+      "seed": 17,
+      "task": "prose"
+    },
+    {
+      "median_latency_ms": 143.139515,
+      "median_paired_speedup": 0.9950110709658443,
+      "method": "prompt-k2",
+      "seed": 17,
+      "task": "prose"
+    },
+    {
+      "median_latency_ms": 143.651121,
+      "median_paired_speedup": 1.0033339744667655,
+      "method": "prompt-adaptive",
+      "seed": 17,
+      "task": "prose"
+    },
+    {
+      "median_latency_ms": 97.721809,
+      "median_paired_speedup": 1.4763575045956883,
+      "method": "ngram-k2",
+      "seed": 17,
+      "task": "prose"
+    },
+    {
+      "median_latency_ms": 97.065431,
+      "median_paired_speedup": 1.5346051160960326,
+      "method": "ngram-adaptive",
+      "seed": 17,
+      "task": "prose"
+    },
+    {
+      "median_latency_ms": 150.316464,
+      "median_paired_speedup": 0.8821636606095918,
+      "method": "gru-k2",
+      "seed": 17,
+      "task": "prose"
+    },
+    {
+      "median_latency_ms": 159.497229,
+      "median_paired_speedup": 0.8924990993385493,
+      "method": "gru-adaptive",
+      "seed": 17,
+      "task": "prose"
+    },
+    {
+      "median_latency_ms": 141.757111,
+      "median_paired_speedup": 1.0,
+      "method": "greedy",
+      "seed": 17,
+      "task": "python"
+    },
+    {
+      "median_latency_ms": 106.829394,
+      "median_paired_speedup": 1.250565972507529,
+      "method": "prompt-k2",
+      "seed": 17,
+      "task": "python"
+    },
+    {
+      "median_latency_ms": 123.58151,
+      "median_paired_speedup": 1.2471852616649501,
+      "method": "prompt-adaptive",
+      "seed": 17,
+      "task": "python"
+    },
+    {
+      "median_latency_ms": 98.558037,
+      "median_paired_speedup": 1.4272286524890787,
+      "method": "ngram-k2",
+      "seed": 17,
+      "task": "python"
+    },
+    {
+      "median_latency_ms": 91.744592,
+      "median_paired_speedup": 1.5098294278165834,
+      "method": "ngram-adaptive",
+      "seed": 17,
+      "task": "python"
+    },
+    {
+      "median_latency_ms": 149.914142,
+      "median_paired_speedup": 0.9648305011881342,
+      "method": "gru-k2",
+      "seed": 17,
+      "task": "python"
+    },
+    {
+      "median_latency_ms": 147.772687,
+      "median_paired_speedup": 0.927123234285088,
+      "method": "gru-adaptive",
+      "seed": 17,
+      "task": "python"
+    },
+    {
+      "median_latency_ms": 136.955378,
+      "median_paired_speedup": 1.0,
+      "method": "greedy",
+      "seed": 29,
+      "task": "dialogue"
+    },
+    {
+      "median_latency_ms": 125.645717,
+      "median_paired_speedup": 1.1580642725207957,
+      "method": "prompt-k2",
+      "seed": 29,
+      "task": "dialogue"
+    },
+    {
+      "median_latency_ms": 126.578003,
+      "median_paired_speedup": 1.081984031617247,
+      "method": "prompt-adaptive",
+      "seed": 29,
+      "task": "dialogue"
+    },
+    {
+      "median_latency_ms": 92.089539,
+      "median_paired_speedup": 1.4995806334284274,
+      "method": "ngram-k2",
+      "seed": 29,
+      "task": "dialogue"
+    },
+    {
+      "median_latency_ms": 94.008283,
+      "median_paired_speedup": 1.4458745512882094,
+      "method": "ngram-adaptive",
+      "seed": 29,
+      "task": "dialogue"
+    },
+    {
+      "median_latency_ms": 138.796675,
+      "median_paired_speedup": 0.9833517062918017,
+      "method": "gru-k2",
+      "seed": 29,
+      "task": "dialogue"
+    },
+    {
+      "median_latency_ms": 137.259285,
+      "median_paired_speedup": 0.9915043561533925,
+      "method": "gru-adaptive",
+      "seed": 29,
+      "task": "dialogue"
+    },
+    {
+      "median_latency_ms": 134.914742,
+      "median_paired_speedup": 1.0,
+      "method": "greedy",
+      "seed": 29,
+      "task": "prose"
+    },
+    {
+      "median_latency_ms": 125.985857,
+      "median_paired_speedup": 1.0621791032564145,
+      "method": "prompt-k2",
+      "seed": 29,
+      "task": "prose"
+    },
+    {
+      "median_latency_ms": 125.343046,
+      "median_paired_speedup": 0.990863212966991,
+      "method": "prompt-adaptive",
+      "seed": 29,
+      "task": "prose"
+    },
+    {
+      "median_latency_ms": 83.537715,
+      "median_paired_speedup": 1.5728048200861633,
+      "method": "ngram-k2",
+      "seed": 29,
+      "task": "prose"
+    },
+    {
+      "median_latency_ms": 84.55039,
+      "median_paired_speedup": 1.5716980572324872,
+      "method": "ngram-adaptive",
+      "seed": 29,
+      "task": "prose"
+    },
+    {
+      "median_latency_ms": 128.767087,
+      "median_paired_speedup": 0.9776602883368812,
+      "method": "gru-k2",
+      "seed": 29,
+      "task": "prose"
+    },
+    {
+      "median_latency_ms": 133.396892,
+      "median_paired_speedup": 1.0255678510838122,
+      "method": "gru-adaptive",
+      "seed": 29,
+      "task": "prose"
+    },
+    {
+      "median_latency_ms": 134.455999,
+      "median_paired_speedup": 1.0,
+      "method": "greedy",
+      "seed": 29,
+      "task": "python"
+    },
+    {
+      "median_latency_ms": 104.366784,
+      "median_paired_speedup": 1.2776769044587706,
+      "method": "prompt-k2",
+      "seed": 29,
+      "task": "python"
+    },
+    {
+      "median_latency_ms": 104.667185,
+      "median_paired_speedup": 1.3098767814151824,
+      "method": "prompt-adaptive",
+      "seed": 29,
+      "task": "python"
+    },
+    {
+      "median_latency_ms": 83.875544,
+      "median_paired_speedup": 1.6175678795760375,
+      "method": "ngram-k2",
+      "seed": 29,
+      "task": "python"
+    },
+    {
+      "median_latency_ms": 80.441407,
+      "median_paired_speedup": 1.577947313529243,
+      "method": "ngram-adaptive",
+      "seed": 29,
+      "task": "python"
+    },
+    {
+      "median_latency_ms": 129.979218,
+      "median_paired_speedup": 1.0614816782390681,
+      "method": "gru-k2",
+      "seed": 29,
+      "task": "python"
+    },
+    {
+      "median_latency_ms": 130.480307,
+      "median_paired_speedup": 1.0882994780200816,
+      "method": "gru-adaptive",
+      "seed": 29,
+      "task": "python"
+    }
+  ],
+  "estimated_controller_and_setup_seconds": 21243.453911729463,
+  "estimated_total_calls": 32233742,
+  "estimated_total_seconds": 92756.91050707646,
+  "full_case_seed_units": 3326,
+  "limitations": [
+    "One validation window per source and seed is cost calibration, not a population speed estimate.",
+    "Two experiment-2 branches are predeclared but not executed or selected.",
+    "Runtime extrapolation assumes within-source calibration costs represent all windows; no confidence bound is justified.",
+    "Per-forward hooks and durable orchestration affect timing; all seven methods use identical accounting hooks.",
+    "Shared CPU host, tiny byte models, and three documents do not establish useful language generation or pretrained-model acceleration."
+  ],
+  "median_result_commit_ns": 13042650.0,
+  "observed_peak_rss_bytes": 256237568,
+  "phase_extrapolation": {
+    "audit": {
+      "draft_calls": 976874,
+      "seconds": 18996.744649662,
+      "target_calls": 4006536
+    },
+    "oracle": {
+      "draft_calls": 0,
+      "seconds": 1344.664244403,
+      "target_calls": 212864
+    },
+    "quality": {
+      "draft_calls": 3326,
+      "seconds": 56.41983555600001,
+      "target_calls": 3326
+    },
+    "timing": {
+      "draft_calls": 6838118,
+      "seconds": 40114.258535046,
+      "target_calls": 14185850
+    },
+    "warmup": {
+      "draft_calls": 1953748,
+      "seconds": 11001.36933068,
+      "target_calls": 4053100
+    }
+  },
+  "population_counts": {
+    "dialogue": 1394,
+    "prose": 192,
+    "python": 77
+  },
+  "shared_oracle_decodes": 3326,
+  "shared_quality_passes": 6652,
+  "shortfall_vs_2000000_calls": 30233742,
+  "shortfall_vs_7200_seconds": 85556.91050707646,
+  "status": "calibration_complete_full_evaluation_pending",
+  "two_experiment_audited_decodes": 46564,
+  "two_experiment_timed_outputs": 325948,
+  "two_experiment_warmup_outputs": 93128
+}

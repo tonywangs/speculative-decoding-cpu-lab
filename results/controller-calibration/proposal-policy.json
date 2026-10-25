@@ -1,0 +1,131 @@
+{
+  "calibration": "Operational cost evidence only; never use these six units to select experiment 2.",
+  "experiment_1": {
+    "configurations": [
+      {
+        "family": null,
+        "name": "greedy",
+        "policy": null
+      },
+      {
+        "family": "prompt",
+        "name": "prompt-k2",
+        "policy": null
+      },
+      {
+        "family": "prompt",
+        "name": "prompt-adaptive",
+        "policy": "adaptive"
+      },
+      {
+        "family": "ngram",
+        "name": "ngram-k2",
+        "policy": null
+      },
+      {
+        "family": "ngram",
+        "name": "ngram-adaptive",
+        "policy": "adaptive"
+      },
+      {
+        "family": "gru",
+        "name": "gru-k2",
+        "policy": null
+      },
+      {
+        "family": "gru",
+        "name": "gru-adaptive",
+        "policy": "adaptive"
+      }
+    ],
+    "hypothesis": "Acceptance-adaptive k2/k4 may reduce drafting overhead while retaining useful accepted blocks.",
+    "rationale": "Historical fixed-k2/k4 measurements favor n-grams; GRU overhead sometimes exceeds saved target work.",
+    "rule": "Start k2 per request; promote after two consecutive fully accepted nonempty blocks; demote on any rejection."
+  },
+  "experiment_2": {
+    "fallback": {
+      "configurations": [
+        {
+          "family": null,
+          "name": "greedy",
+          "policy": null
+        },
+        {
+          "family": "prompt",
+          "name": "prompt-k2",
+          "policy": null
+        },
+        {
+          "family": "prompt",
+          "name": "prompt-fallback",
+          "policy": "fallback"
+        },
+        {
+          "family": "ngram",
+          "name": "ngram-k2",
+          "policy": null
+        },
+        {
+          "family": "ngram",
+          "name": "ngram-fallback",
+          "policy": "fallback"
+        },
+        {
+          "family": "gru",
+          "name": "gru-k2",
+          "policy": null
+        },
+        {
+          "family": "gru",
+          "name": "gru-fallback",
+          "policy": "fallback"
+        }
+      ],
+      "rule": "Keep adaptive promotion at two; after four nonempty proposal blocks, use cached greedy for the rest of the request if cumulative acceptance is below 0.5."
+    },
+    "selection": "Only after complete experiment-1 validation across the full manifest and both seeds. Compute median across cases of median paired greedy/adaptive-GRU time ratios per seed. If either seed is below 1 select fallback; otherwise strict.",
+    "strict": {
+      "configurations": [
+        {
+          "family": null,
+          "name": "greedy",
+          "policy": null
+        },
+        {
+          "family": "prompt",
+          "name": "prompt-k2",
+          "policy": null
+        },
+        {
+          "family": "prompt",
+          "name": "prompt-strict",
+          "policy": "strict"
+        },
+        {
+          "family": "ngram",
+          "name": "ngram-k2",
+          "policy": null
+        },
+        {
+          "family": "ngram",
+          "name": "ngram-strict",
+          "policy": "strict"
+        },
+        {
+          "family": "gru",
+          "name": "gru-k2",
+          "policy": null
+        },
+        {
+          "family": "gru",
+          "name": "gru-strict",
+          "policy": "strict"
+        }
+      ],
+      "rule": "Promote after four consecutive fully accepted nonempty blocks; demote on rejection."
+    }
+  },
+  "experiment_limit": 2,
+  "test_freeze": "Choose experiment 2 exclusively from complete validation, then freeze both policies before any full test evaluation.",
+  "version": 1
+}

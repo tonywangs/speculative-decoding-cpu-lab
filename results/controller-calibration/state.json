@@ -1,0 +1,24 @@
+{
+  "calibration_complete": true,
+  "completed_full_experiments": 0,
+  "completed_records": 438,
+  "full_evaluation_status": "pending; resource authorization required",
+  "limits": {
+    "calibration_units": 6,
+    "calls": 150000,
+    "experiments": 2,
+    "external_calls": 0,
+    "memory_bytes": 4294967296,
+    "seconds": 600.0
+  },
+  "next_calibration_work": null,
+  "pending_calibration_records": 0,
+  "usage": {
+    "calls": 29297,
+    "draft_calls": 8896,
+    "lost_calls": 0,
+    "peak_rss_bytes": 256237568,
+    "seconds": 85.56418274156749,
+    "target_calls": 20401
+  }
+}
